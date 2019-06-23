@@ -44,16 +44,6 @@
 	<jpa:repositories
 		factory-class="org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean"
 		entity-manager-factory-ref="emf" base-package="org.concourplus.dao" />
-	
-<!--  <jpa:auditing auditor-aware-ref="springSecurityAuditorAware" />
-	<bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
- -->
-
-<!-- 	<bean id="serviceLogger" class="fr.percall.si.base.services.logging.ServiceLogger" />
- -->
-<!-- 	<aop:aspectj-autoproxy>
-		<aop:include name="serviceLogger" />
-	</aop:aspectj-autoproxy>
- -->
-
+		
+	<import resource="applicationContext-messages.xml" />
 </beans>

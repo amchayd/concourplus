@@ -13,12 +13,6 @@ public interface UserService {
 
 	Response<User> addUser(User user);
 
-	List<User> searchUsers(Request<User> request);
-
-	int searchUsersNumber(Request<User> request);
-
-	List<User> getListSpecified(Request<User> request);
-
 	Response<User> editUser(User user);
 
 	Response<User> validateUser(Request<User> request);
@@ -26,10 +20,6 @@ public interface UserService {
 	Response<User> getUser(User user);
 
 	User getUser(Long id);
-
-	User getUserById(long id);
-
-	Integer countUsers(Request<User> request);
 
 	Collection<User> getUsers(Request<Void> request);
 
