@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,8 +39,7 @@ public class User implements Serializable{
 	@Column(name = "last_name")
 	private String lastName;
 	
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="gender_id")
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
     
 	private Date birthdate;

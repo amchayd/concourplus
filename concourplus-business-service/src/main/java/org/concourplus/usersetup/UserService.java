@@ -2,7 +2,6 @@ package org.concourplus.usersetup;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
@@ -19,7 +18,7 @@ public interface UserService {
 
 	Response<User> getUser(User user);
 
-	User getUser(Long id);
+	User getUserById(Long id);
 
 	Collection<User> getUsers(Request<Void> request);
 

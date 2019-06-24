@@ -54,6 +54,10 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		if (existsUserName) {
 			response.addMessage(messageSource.getMessage(USERNAME_EXISTANT, new String[] { user.getUsername()}, ConstantBase.DEFAULT_MESSAGE, null));
 		}
+
+		if (response.hasMessages()) {
+			response.setStatus(Response.STATUS_ERROR);
+		}
 	}
 
 	private boolean existsByUserName(final String userName, final Long id) {
@@ -83,8 +87,11 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 
 
 	public Response<User> editUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		final Response<User> response = new Response<User>();
+		final User userRef = userRepository.save(user);
+		response.setModel(userRef);
+		response.setStatus(Response.STATUS_SUCCES);
+		return response;
 	}
 
 
@@ -103,9 +110,8 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 
 
 
-	public User getUser(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getUserById(Long id) {
+		return userRepository.findOne(id);
 	}
 
 

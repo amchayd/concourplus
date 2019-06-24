@@ -33,21 +33,34 @@ public class UserServiceTest {
     }
     
 	@Test
-	public void testAddUser() {
+	public void testStep1AddUser() {
 		
+	
+	 User user = createUser("kl123", "pass123");
+	 Response<User> response  = userService.addUser(user);
+	 assertEquals(response.getStatus(), Response.STATUS_ERROR);
+	}
+	@Test
+	public void testStep2UpdateUser() {
+		User userRef = userService.getUserById((long) 1);
+			 userRef.setLastName("Abou Amal");
+			 
+			 Response<User> response = userService.editUser(userRef);
+			 
+			 assertEquals(response.getStatus(), Response.STATUS_SUCCES);
+	}
+	
+	private User createUser(String userName, String password) {
 		User user = new User();
 	     user.setFirstName("Oualid");
 	     user.setLastName("Amch");
-	     
-	Gender gender = new Gender();
-		   gender.setCode("F");
-		   gender.setLabel("Female");
-	     user.setGender(gender);
+	    
+	     user.setGender(Gender.MALE);
 	     user.setBirthdate(new Date());
 	     user.setMail("kl@mail.com");
 	     user.setPhoneNumber("00000000111");
-	     user.setUsername("kl123");
-	     user.setPassword("sssss99900ss");
+	     user.setUsername(userName);
+	     user.setPassword(password);
 
 	Address ad = new Address();
 	        ad.setStreet("Agdal");
@@ -60,7 +73,7 @@ public class UserServiceTest {
 	        ct.setLabel("Maroc");
 	        ad.setCountry(ct);
 	      user.setAddress(ad);
-   
+  
 	SecretQuestion sq = new SecretQuestion();
 	               sq.setQuestion("question 1");
 	      user.setSecretQuestion(sq);
@@ -86,11 +99,8 @@ public class UserServiceTest {
 		      roles.add(r2);
 	        pf.setRoles(roles);
 	        user.setProfile(pf);
-			
-	 Response<User> response  = userService.addUser(user);
-	     System.err.println("sss=========dd========---------"+response.getMessages().get(0));
-
-		assertEquals(1, 1);
+	        
+	        return user;
 	}
 	
 	
