@@ -20,7 +20,7 @@ public interface UserService {
 
 	User getUserById(Long id);
 
-	Collection<User> getUsers(Request<Void> request);
+	Collection<User> getUsers(Request<User> request);
 
 	void saveOrUpdate(User user);
 

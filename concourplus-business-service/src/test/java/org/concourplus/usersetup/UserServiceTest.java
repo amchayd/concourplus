@@ -5,8 +5,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
 import org.concourplus.model.referential.Address;
 import org.concourplus.model.referential.Country;
@@ -49,7 +51,16 @@ public class UserServiceTest {
 			 
 			 assertEquals(response.getStatus(), Response.STATUS_SUCCES);
 	}
+	@Test
+	public void testStep3getUsersBySpecification() {
+		Request<User> request = new Request<>();
+					  request.addVariable("loginIsEqual", "kl123");
+		
+		List<User> listSpecification =(List<User>) userService.getUsers(request);
+		assertEquals("Many user have the same username",1,listSpecification.size());
+	}
 	
+
 	private User createUser(String userName, String password) {
 		User user = new User();
 	     user.setFirstName("Oualid");

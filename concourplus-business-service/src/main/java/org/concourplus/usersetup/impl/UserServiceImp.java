@@ -16,12 +16,13 @@ import org.concourplus.usersetup.UserService;
 import org.concourplus.usersetup.UserSetUpConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 
 @Service("userService")
 public class UserServiceImp implements UserService, UserSetUpConstants{
@@ -116,9 +117,12 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 
 
 
-	public Collection<User> getUsers(Request<Void> request) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<User> getUsers(Request<User> request) {
+		final List<Specification<User>> specificationList = SpecificationsHelper.chooseSpecifications(UserSpecification.class, request);
+		final Specifications<User> specifications = SpecificationsHelper.buildWhereClause(specificationList);
+		final Pageable page = SpecificationsHelper.buildPage(request);
+		final Page<User> resultat = userRepository.findAll(Specifications.where(specifications), page);
+		return resultat.getContent();
 	}
 
 
