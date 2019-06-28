@@ -35,13 +35,12 @@ public class UserServiceTest {
     }
     
 	@Test
-	public void testStep1AddUser() {
-		
-	
+	public void testStep1AddUser() {	
 	 User user = createUser("kl123", "pass123");
 	 Response<User> response  = userService.addUser(user);
 	 assertEquals(response.getStatus(), Response.STATUS_ERROR);
 	}
+	
 	@Test
 	public void testStep2UpdateUser() {
 		User userRef = userService.getUserById((long) 1);

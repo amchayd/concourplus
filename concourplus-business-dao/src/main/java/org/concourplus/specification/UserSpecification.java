@@ -21,4 +21,13 @@ public class UserSpecification {
 		
 		};
 	}
+	
+	public static Specification<User> tokenEq(final String token) {
+		return new Specification<User>() {
+			@Override
+			public Predicate toPredicate(Root<User> utilisateurRoot, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return cb.equal(utilisateurRoot.get(User_.token), token);
+			}
+		};
+	}
 }

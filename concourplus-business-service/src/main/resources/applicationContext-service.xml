@@ -41,6 +41,9 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:component-scan base-package="org.concourplus" />
 
+	<jpa:auditing auditor-aware-ref="springSecurityAuditorAware" />
+	<bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
+	
 	<jpa:repositories
 		factory-class="org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean"
 		entity-manager-factory-ref="emf" base-package="org.concourplus.dao" />

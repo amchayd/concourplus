@@ -11,6 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>{
 
+    @Query("select u from User u  where u.username = :username")
+	public User findByUsername(@Param("username") String username);
+	
 	@Modifying
 	@Query("UPDATE User u SET u.token = :token, u.tokenDate = :tokenDate WHERE u.id = :userId")
 	public void updateUserToken(@Param("token") String token, @Param("tokenDate") Date tokenDate, @Param("userId") Long userId);

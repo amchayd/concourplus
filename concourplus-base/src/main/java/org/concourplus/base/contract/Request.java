@@ -115,6 +115,16 @@ public class Request<T> {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+	
+	
+
+	public T getModel() {
+		return model;
+	}
+
+	public void setModel(T model) {
+		this.model = model;
+	}
 
 	public Object getGeneric(String key, Class classType) {
 		if (String.class.equals(classType)) {

@@ -98,8 +98,9 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 
 
 	public Response<User> validateUser(Request<User> request) {
-		// TODO Auto-generated method stub
-		return null;
+		Response<User> response = new Response<User>();
+		this.validate(request.getModel(), response);
+		return response;
 	}
 
 
