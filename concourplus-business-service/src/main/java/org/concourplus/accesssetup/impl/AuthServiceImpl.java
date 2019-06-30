@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService{
 
 	private static final String INVALIDE_LOGIN_PASS = "AUTH-01";
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -22,6 +23,7 @@ public class AuthServiceImpl implements AuthService{
 	
 	@Override
 	public Response<User> login(String username, String password) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -2,6 +2,7 @@ package org.concourplus.model.usersetup;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -86,9 +89,12 @@ public class User implements Serializable{
 	@Column(name = "status_description")
 	private String statusDescription; 
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "profile_id")
-	private Profile profile;
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "user_profile", 
+        joinColumns = { @JoinColumn(name = "user_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "profile_id") })
+	private Set<Profile> profiles;
 
 	public long getId() {
 		return id;
@@ -258,12 +264,12 @@ public class User implements Serializable{
 		this.statusDescription = statusDescription;
 	}
 
-	public Profile getProfile() {
-		return profile;
+	public Set<Profile> getProfiles() {
+		return profiles;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public void setProfiles(Set<Profile> profiles) {
+		this.profiles = profiles;
 	}
 
 	public static long getSerialversionuid() {

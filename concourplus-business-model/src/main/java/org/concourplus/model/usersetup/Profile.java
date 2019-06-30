@@ -25,7 +25,7 @@ public class Profile implements Serializable{
 	private String code;
 	private String label;
 
-	@OneToMany(mappedBy = "profile")
+	@ManyToMany(mappedBy = "profiles")
 	private Set<User> users;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })

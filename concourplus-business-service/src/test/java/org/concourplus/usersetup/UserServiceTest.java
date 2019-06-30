@@ -108,7 +108,9 @@ public class UserServiceTest {
 		      roles.add(r1);
 		      roles.add(r2);
 	        pf.setRoles(roles);
-	        user.setProfile(pf);
+	 Set<Profile> pfs = new HashSet<Profile>();
+	 			  pfs.add(pf);
+	        user.setProfiles(pfs);
 	        
 	        return user;
 	}
