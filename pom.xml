@@ -11,6 +11,7 @@
   	<module>concourplus-business-model</module>
   	<module>concourplus-business-dao</module>
   	<module>concourplus-business-service</module>
+  	<module>concourplus-business-web</module>
   	<module>concourplus-business-controller</module>
   </modules>
   <properties>

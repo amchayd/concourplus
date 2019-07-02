@@ -22,7 +22,7 @@
   <dependencies>
   	<dependency>
   		<groupId>org.concourplus</groupId>
-  		<artifactId>concourplus-business-service</artifactId>
+  		<artifactId>concourplus-business-web</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	
