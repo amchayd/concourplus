@@ -1,4 +1,4 @@
-package org.concourplus.usersetup.impl;
+package org.concourplus.service.usersetup.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,9 +11,9 @@ import org.concourplus.base.util.ConstantBase;
 import org.concourplus.base.util.SpecificationsHelper;
 import org.concourplus.dao.usersetup.UserRepository;
 import org.concourplus.model.usersetup.User;
+import org.concourplus.service.usersetup.UserService;
+import org.concourplus.service.usersetup.UserSetUpConstants;
 import org.concourplus.specification.UserSpecification;
-import org.concourplus.usersetup.UserService;
-import org.concourplus.usersetup.UserSetUpConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
@@ -21,15 +21,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service("userService")
-public class UserServiceImp implements UserService, UserSetUpConstants{
+public class UserServiceImp implements UserService, UserSetUpConstants {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -37,13 +39,13 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		final Response<User> response = new Response<User>();
 		this.validate(user, response);
 		if (!response.hasStatutError()) {
-			user.setPassword(encryptPassword(user.getPassword(), user.getUsername()));
+			user.setPassword(bcryptPassword(user.getPassword()));
 			final User userRef = userRepository.save(user);
 			response.setModel(userRef);
 		}
 		return response;
 	}
-	
+
 	private void validate(final User user, final Response<User> response) {
 		if (StringUtils.isEmpty(user.getUsername())) {
 			/**
@@ -53,7 +55,8 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		}
 		final boolean existsUserName = existsByUserName(user.getUsername(), user.getId());
 		if (existsUserName) {
-			response.addMessage(messageSource.getMessage(USERNAME_EXISTANT, new String[] { user.getUsername()}, ConstantBase.DEFAULT_MESSAGE, null));
+			response.addMessage(messageSource.getMessage(USERNAME_EXISTANT, new String[] { user.getUsername() },
+					ConstantBase.DEFAULT_MESSAGE, null));
 		}
 
 		if (response.hasMessages()) {
@@ -71,11 +74,18 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		final Specifications<User> specifications = SpecificationsHelper.buildWhereClause(specificationList);
 		return userRepository.count(specifications) > 0;
 	}
-	
+
+	// Encrypt using 256
+	@SuppressWarnings("unused")
 	private String encryptPassword(final String password, final String salt) {
 		return new ShaPasswordEncoder(256).encodePassword(password, salt);
 	}
 
+	private String bcryptPassword(final String password) {
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.encode(password);
+
+	}
 
 	public UserRepository getUserRepository() {
 		return userRepository;
@@ -85,8 +95,6 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		this.userRepository = userRepository;
 	}
 
-
-
 	public Response<User> editUser(User user) {
 		final Response<User> response = new Response<User>();
 		final User userRef = userRepository.save(user);
@@ -95,48 +103,37 @@ public class UserServiceImp implements UserService, UserSetUpConstants{
 		return response;
 	}
 
-
-
 	public Response<User> validateUser(Request<User> request) {
 		Response<User> response = new Response<User>();
 		this.validate(request.getModel(), response);
 		return response;
 	}
 
-
-
 	public Response<User> getUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-
 	public User getUserById(Long id) {
 		return userRepository.findOne(id);
 	}
 
-
-
 	public Collection<User> getUsers(Request<User> request) {
-		final List<Specification<User>> specificationList = SpecificationsHelper.chooseSpecifications(UserSpecification.class, request);
+		final List<Specification<User>> specificationList = SpecificationsHelper
+				.chooseSpecifications(UserSpecification.class, request);
 		final Specifications<User> specifications = SpecificationsHelper.buildWhereClause(specificationList);
 		final Pageable page = SpecificationsHelper.buildPage(request);
 		final Page<User> resultat = userRepository.findAll(Specifications.where(specifications), page);
 		return resultat.getContent();
 	}
 
-
-
 	public void saveOrUpdate(User user) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	public void updateUserToken(String token, Date tokenDate, Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

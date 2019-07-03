@@ -1,4 +1,4 @@
-package org.concourplus.accesssetup;
+package org.concourplus.service.accesssetup;
 
 import java.util.List;
 

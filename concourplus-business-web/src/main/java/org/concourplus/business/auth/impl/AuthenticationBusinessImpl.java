@@ -9,7 +9,9 @@ import org.concourplus.business.helpers.JsonResult;
 import org.concourplus.model.usersetup.User;
 import org.concourplus.service.accesssetup.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service("authenticationBusiness")
 public class AuthenticationBusinessImpl implements AuthenticationBusiness{
 
 	@Autowired
@@ -19,7 +21,7 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness{
 	public JsonResult login(String username, String password) {
 		JsonResult result = new JsonResult();
 		List<String> messages = new ArrayList<>();
-		Response<User> response = null;
+		Response<User> response = authenticationService.login(username, password);
 		return null;
 	}
 

@@ -1,32 +1,32 @@
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:security="http://www.springframework.org/schema/security"
-
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security.xsd">
-
-
-	<http auto-config="true" disable-url-rewriting="true" pattern="/**">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:http="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security 
+                           http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+	
+	<security:http auto-config="true" disable-url-rewriting="true" pattern="/**">
 		<!-- access-denied-page="/index.xhtml" -->
-		<access-denied-handler error-page="/index.xhtml" />
-		<form-login login-page="/index.xhtml"
+		<security:access-denied-handler error-page="/index.xhtml" />
+		<security:form-login login-page="/index.xhtml"
 			authentication-failure-url="/index.xhtml" />
 
-		<logout delete-cookies="JSESSIONID" invalidate-session="true"
+		<security:logout delete-cookies="JSESSIONID" invalidate-session="true"
 			logout-success-url="/index.xhtml" logout-url="/j_spring_security_logout" />
 
-		<session-management invalid-session-url="/index.xhtml?faces-redirect=true"
+		<security:session-management invalid-session-url="/index.xhtml?faces-redirect=true"
 			session-authentication-error-url="/index.xhtml?faces-redirect=true">
-			<concurrency-control max-sessions="1"
+			<security:concurrency-control max-sessions="1"
 				expired-url="/index.xhtml" error-if-maximum-exceeded="true" />
-		</session-management>
-	</http>
+		</security:session-management>
+	</security:http>
 
-	<beans:bean id="saltSource"
-		class="org.concourplus.accesssetup.impl.ConcourPlusSalt" scope="singleton" />
+	<bean id="saltSource"
+		class="org.concourplus.service.accesssetup.impl.ConcourPlusSalt" scope="singleton" />
 
 	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider
@@ -37,6 +37,31 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<global-method-security secured-annotations="enabled"
+	<security:global-method-security secured-annotations="enabled"
 		jsr250-annotations="enabled" />
-</beans:beans>
+</beans>
+<!-- 
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/security
+		   http://www.springframework.org/schema/security/spring-security.xsd">
+           
+
+	<context:annotation-config />
+	<context:component-scan base-package="org.concourplus" />
+	
+
+
+<http auto-config="true">
+  <intercept-url pattern="/**" access="ROLE_USER" />
+</http>
+
+</beans:beans> -->

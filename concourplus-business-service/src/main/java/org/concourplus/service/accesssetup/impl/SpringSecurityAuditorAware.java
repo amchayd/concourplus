@@ -1,4 +1,4 @@
-package org.concourplus.accesssetup.impl;
+package org.concourplus.service.accesssetup.impl;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package org.concourplus.accesssetup.impl;
+package org.concourplus.service.accesssetup.impl;
 
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.core.userdetails.UserDetails;

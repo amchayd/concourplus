@@ -1,4 +1,4 @@
-package org.concourplus.usersetup;
+package org.concourplus.service.usersetup;
 
 import java.util.Collection;
 import java.util.Date;
