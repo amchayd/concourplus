@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @RestController
 @RequestMapping("/auth")
+@EnableWebMvc
 public class LoginController {
 	
 	@Autowired
@@ -22,16 +24,10 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public JsonResult login1() {
-		return null;
+	public JsonResult login(@RequestParam(value = "username", required = true) String username,
+			@RequestParam(value = "password", required = true) String password) {
+		
+			return authenticationBusiness.login(username, password);
 	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
-	public JsonResult login() {
-		System.out.println("===============GET==================");
-		System.out.println("========"+authenticationBusiness.login("", "")+"=======");
 
-		return null;
-	}
 }

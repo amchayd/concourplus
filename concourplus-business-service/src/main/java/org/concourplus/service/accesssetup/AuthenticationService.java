@@ -8,6 +8,6 @@ import org.concourplus.model.usersetup.User;
 public interface AuthenticationService {
 
 	public Response<User> login(String username, String password);
-	public void updateUserToken(String token, Date tokenDate,  long id);
+	public void updateUserToken(String token, Date tokenDate,  long userId);
 	
 }

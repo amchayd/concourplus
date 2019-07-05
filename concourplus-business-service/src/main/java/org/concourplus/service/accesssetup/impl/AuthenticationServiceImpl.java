@@ -15,8 +15,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("authenticationService")
+@Transactional(readOnly = false)
 public class AuthenticationServiceImpl implements AuthenticationService{
 
 	private static final String INVALIDE_LOGIN_PASS = "AUTH-01";
@@ -51,9 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	}
 
 	@Override
-	public void updateUserToken(String token, Date tokenDate, long id) {
-		// TODO Auto-generated method stub
-		
+	public void updateUserToken(String token, Date tokenDate, long userId) {
+		userRepository.updateUserToken(token, tokenDate, userId);		
 	}
 
 }
