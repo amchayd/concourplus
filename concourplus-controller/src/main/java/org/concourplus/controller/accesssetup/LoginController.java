@@ -29,5 +29,11 @@ public class LoginController {
 		
 			return authenticationBusiness.login(username, password);
 	}
-
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public String logout() {
+		
+			return "LOGOUT";
+	}
 }

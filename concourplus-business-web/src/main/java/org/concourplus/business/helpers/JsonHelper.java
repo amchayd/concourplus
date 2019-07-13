@@ -3,8 +3,6 @@ package org.concourplus.business.helpers;
 import java.io.IOException;
 import java.util.List;
 
-import javax.faces.FacesException;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -32,26 +30,6 @@ public class JsonHelper<T> {
 		this.Status = Status;
 		this.messages = messages;
 		this.object = object;
-	}
-
-	public void jsonToObject() {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			this.model = (T) mapper.readValue(this.json, model.getClass());
-		} catch (IOException e) {
-			throw new FacesException(e);
-		}
-	}
-
-	public void jsonToObjects() {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-
-			this.models = mapper.readValue(this.json, new TypeReference<List<T>>() {
-			});
-		} catch (IOException e) {
-			throw new FacesException(e);
-		}
 	}
 
 	public T getModel() {

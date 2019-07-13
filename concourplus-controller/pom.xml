@@ -5,13 +5,13 @@
     <artifactId>concourplus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>concourplus-business-controller</artifactId>
-  <name>concourplus-business-controller</name>
+  <artifactId>concourplus-controller</artifactId>
+  <name>concourplus-controller</name>
   <description>Controller of concourplus project</description>
   <packaging>war</packaging>
   
   <build>
-	<finalName>concourplus-business-controller</finalName>
+	<finalName>concourplus-controller</finalName>
 	<resources>
 		<resource>
 			<directory>src/main/resources</directory>
@@ -116,21 +116,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>		
-		
-		<dependency>
-			<groupId>org.apache.myfaces.core</groupId>
-			<artifactId>myfaces-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.myfaces.core</groupId>
-			<artifactId>myfaces-impl</artifactId>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>

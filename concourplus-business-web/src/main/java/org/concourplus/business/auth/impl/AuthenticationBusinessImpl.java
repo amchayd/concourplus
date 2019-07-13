@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.FacesException;
-
 import org.concourplus.base.contract.Response;
 import org.concourplus.business.auth.AuthenticationBusiness;
 import org.concourplus.business.helpers.JsonResult;
@@ -65,8 +63,8 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness{
 		
 		return result;
 		
-		}catch (FacesException e) {
-			throw new FacesException(e);
+		}catch (Exception e) {
+			throw e;
 		}
 	}
 
