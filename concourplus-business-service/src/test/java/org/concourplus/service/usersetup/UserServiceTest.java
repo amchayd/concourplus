@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
+import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.referential.Address;
 import org.concourplus.model.referential.Country;
 import org.concourplus.model.referential.Gender;
@@ -50,10 +51,10 @@ public class UserServiceTest {
 
 	@Test
 	public void testStep3getUsersBySpecification() {
-		Request<User> request = new Request<>();
+		Request<UserDTO> request = new Request<>();
 		request.addVariable("loginIsEqual", "kl123");
 
-		List<User> listSpecification = (List<User>) userService.getUsers(request);
+		List<UserDTO> listSpecification = (List<UserDTO>) userService.getUsers(request);
 		assertEquals("Many user have the same username", 1, listSpecification.size());
 	}
 

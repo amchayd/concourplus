@@ -21,6 +21,10 @@
 	<context:spring-configured />
 	<context:annotation-config />
 
+	<bean id="mapper" class="org.dozer.spring.DozerBeanMapperFactoryBean"
+		lazy-init="false">
+		<property name="mappingFiles" value="classpath:mapper/**/*mapping.xml" />
+	</bean>
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />

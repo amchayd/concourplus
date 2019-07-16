@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
+import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
 
 
@@ -20,7 +21,7 @@ public interface UserService {
 
 	User getUserById(Long id);
 
-	Collection<User> getUsers(Request<User> request);
+	Collection<UserDTO> getUsers(Request<UserDTO> request);
 
 	void saveOrUpdate(User user);
 

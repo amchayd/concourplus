@@ -126,6 +126,50 @@ public class Request<T> {
 		this.model = model;
 	}
 
+	public String getConverterId() {
+		return converterId;
+	}
+
+	public void setConverterId(String converterId) {
+		this.converterId = converterId;
+	}
+	
+	public Map<String, String> getVariablesKeyConversion() {
+		return variablesKeyConversion;
+	}
+
+	public void setVariablesKeyConversion(Map<String, String> variablesKeyConversion) {
+		this.variablesKeyConversion = variablesKeyConversion;
+	}
+
+	public Map<Class<?>, String> getConverterIdByClass() {
+		return converterIdByClass;
+	}
+
+	public void setConverterIdByClass(Map<Class<?>, String> converterIdByClass) {
+		this.converterIdByClass = converterIdByClass;
+	}
+
+	public String getSortField() {
+		return sortField;
+	}
+
+	public void setSortField(String sortField) {
+		this.sortField = sortField;
+	}
+
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
+	}
+
+	public void setVariables(Map<String, Object> variables) {
+		this.variables = variables;
+	}
+
 	public Object getGeneric(String key, Class classType) {
 		if (String.class.equals(classType)) {
 			return get(key);

@@ -5,12 +5,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
 import org.concourplus.base.util.ConstantBase;
 import org.concourplus.base.util.SpecificationsHelper;
 import org.concourplus.dao.usersetup.UserRepository;
+import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
+import org.concourplus.service.mapper.MapperService;
 import org.concourplus.service.usersetup.UserService;
 import org.concourplus.service.usersetup.UserSetUpConstants;
 import org.concourplus.specification.UserSpecification;
@@ -34,6 +38,9 @@ public class UserServiceImp implements UserService, UserSetUpConstants {
 
 	@Autowired
 	private MessageSource messageSource;
+	
+	@Autowired
+	private transient MapperService mapperService;
 
 	public Response<User> addUser(User user) {
 		final Response<User> response = new Response<User>();
@@ -117,14 +124,16 @@ public class UserServiceImp implements UserService, UserSetUpConstants {
 	public User getUserById(Long id) {
 		return userRepository.findOne(id);
 	}
-
-	public Collection<User> getUsers(Request<User> request) {
+	@Transactional
+	public Collection<UserDTO> getUsers(Request<UserDTO> request) {
+		final Request<User> requestRef = SpecificationsHelper.convertRequest(request);
 		final List<Specification<User>> specificationList = SpecificationsHelper
-				.chooseSpecifications(UserSpecification.class, request);
+				.chooseSpecifications(UserSpecification.class, requestRef);
 		final Specifications<User> specifications = SpecificationsHelper.buildWhereClause(specificationList);
-		final Pageable page = SpecificationsHelper.buildPage(request);
+		final Pageable page = SpecificationsHelper.buildPage(requestRef);
 		final Page<User> resultat = userRepository.findAll(Specifications.where(specifications), page);
-		return resultat.getContent();
+		Collection<User> users = resultat.getContent();
+		return mapperService.mapCollection(users, UserDTO.class, request.getConverterId());
 	}
 
 	public void saveOrUpdate(User user) {
@@ -133,7 +142,6 @@ public class UserServiceImp implements UserService, UserSetUpConstants {
 	}
 
 	public void updateUserToken(String token, Date tokenDate, Long id) {
-		// TODO Auto-generated method stub
-
+		userRepository.updateUserToken(token, tokenDate, id);
 	}
 }

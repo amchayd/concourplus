@@ -3,6 +3,7 @@ package org.concourplus.service.accesssetup;
 import static org.junit.Assert.assertEquals;
 
 import org.concourplus.base.contract.Response;
+import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,7 +22,7 @@ public class AuthServiceTest {
 
 	@Test
 	public void testLogin() {
-		Response<User> response = authenticationService.login("kl123", "pass123");
+		Response<UserDTO> response = authenticationService.login("kl123", "pass123");
 
 		assertEquals("Username or Password are invalid :", Response.STATUS_SUCCES, response.getStatus());
 	}

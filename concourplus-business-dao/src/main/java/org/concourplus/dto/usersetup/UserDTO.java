@@ -1,103 +1,58 @@
-package org.concourplus.model.usersetup;
+package org.concourplus.dto.usersetup;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import org.concourplus.dto.referential.AddressDTO;
+import org.concourplus.dto.referential.GenderDTO;
+import org.concourplus.dto.referential.SecretQuestionDTO;
+import org.concourplus.dto.referential.UserStatusDTO;
 
-import org.concourplus.model.referential.Address;
-import org.concourplus.model.referential.Gender;
-import org.concourplus.model.referential.SecretQuestion;
-import org.concourplus.model.referential.UserStatus;
+public class UserDTO {
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-@Table(name = "user")
-public class User implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue
 	private long id;
 	
-	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name = "last_name")
 	private String lastName;
 	
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
+	private GenderDTO gender;
     
 	private Date birthdate;
+	
 	private String phoneNumber;
+	
 	private String mail;
 	
 	private String username;
+	
 	private String password;
+	
 	private String token;
 	
-	@Column(name = "token_date")
 	private Date tokenDate;
 	
-	@Column(name = "is_connected")
 	private Boolean isConnected;
 
-	@Column(name = "is_absent")
 	private Boolean isAbsent;
 
-	@Column(name = "last_connexion")
 	private Date lastConnexion;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="address_id")
-	private Address address;
+	private AddressDTO address;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="secret_question_id")
-	private SecretQuestion secretQuestion;
+	private SecretQuestionDTO secretQuestion;
 	
-	@Column(name = "secret_question_answer")
 	private String secretQuestionAnswer;
 	
-	@Column(name = "creation_date")
 	private Date creationDate;
 	
-	@Column(name = "last_modification_date")
 	private Date lastModificationDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="status_id")
-	private UserStatus status;
+	private UserStatusDTO status;
 	
-	@Column(name = "status_description")
 	private String statusDescription; 
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "user_profile", 
-        joinColumns = { @JoinColumn(name = "user_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "profile_id") })
-	@JsonIgnore
-	private Set<Profile> profiles;
+	private Set<ProfileDTO> profiles;
 
 	public long getId() {
 		return id;
@@ -123,11 +78,11 @@ public class User implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public Gender getGender() {
+	public GenderDTO getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(GenderDTO gender) {
 		this.gender = gender;
 	}
 
@@ -211,19 +166,19 @@ public class User implements Serializable{
 		this.lastConnexion = lastConnexion;
 	}
 
-	public Address getAddress() {
+	public AddressDTO getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressDTO address) {
 		this.address = address;
 	}
 
-	public SecretQuestion getSecretQuestion() {
+	public SecretQuestionDTO getSecretQuestion() {
 		return secretQuestion;
 	}
 
-	public void setSecretQuestion(SecretQuestion secretQuestion) {
+	public void setSecretQuestion(SecretQuestionDTO secretQuestion) {
 		this.secretQuestion = secretQuestion;
 	}
 
@@ -251,11 +206,11 @@ public class User implements Serializable{
 		this.lastModificationDate = lastModificationDate;
 	}
 
-	public UserStatus getStatus() {
+	public UserStatusDTO getStatus() {
 		return status;
 	}
 
-	public void setStatus(UserStatus status) {
+	public void setStatus(UserStatusDTO status) {
 		this.status = status;
 	}
 
@@ -267,18 +222,13 @@ public class User implements Serializable{
 		this.statusDescription = statusDescription;
 	}
 
-	public Set<Profile> getProfiles() {
+	public Set<ProfileDTO> getProfiles() {
 		return profiles;
 	}
 
-	public void setProfiles(Set<Profile> profiles) {
+	public void setProfiles(Set<ProfileDTO> profiles) {
 		this.profiles = profiles;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 
 	
 }

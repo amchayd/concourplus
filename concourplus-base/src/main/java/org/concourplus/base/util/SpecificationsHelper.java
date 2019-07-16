@@ -96,4 +96,16 @@ public abstract class SpecificationsHelper {
 		}
 		return specificationList;
 	}
+	
+	public static <T, U> Request<U> convertRequest(Request<T> request) {
+		Request<U> requestRef = new Request<U>();
+		requestRef.setVariables(request.getVariables());
+		requestRef.setFirst(request.getFirst());
+		requestRef.setPageSize(request.getPageSize());
+		requestRef.setSortField(request.getSortField());
+		requestRef.setSortOrder(request.getSortOrder());
+		requestRef.setConverterId(request.getConverterId());
+		requestRef.setVariablesKeyConversion(request.getVariablesKeyConversion());
+		return requestRef;
+	}
 }

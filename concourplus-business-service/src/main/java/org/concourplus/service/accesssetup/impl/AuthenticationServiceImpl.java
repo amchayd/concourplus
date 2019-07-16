@@ -5,8 +5,11 @@ import java.util.Date;
 import org.concourplus.base.contract.Response;
 import org.concourplus.base.util.ConstantBase;
 import org.concourplus.dao.usersetup.UserRepository;
+import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
 import org.concourplus.service.accesssetup.AuthenticationService;
+import org.concourplus.service.mapper.EnumMapper;
+import org.concourplus.service.mapper.MapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,17 +35,24 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Autowired
+	private transient MapperService mapperService;
+	
 	@Override
-	public Response<User> login(String username, String password) {
-		Response<User> response = new Response<User>();
+	public Response<UserDTO> login(String username, String password) {
+		Response<UserDTO> response = new Response<UserDTO>();
 		try {
 			Authentication authRequest = new UsernamePasswordAuthenticationToken(username, password);
 			Authentication authResult = authenticationManager.authenticate(authRequest);
 
 			SecurityContextHolder.getContext().setAuthentication(authResult);
 			User user = userRepository.findByUsername(username);
-
-			response.setModel(user);
+			
+			if (user != null && user.getId() != 0) {
+				final UserDTO userDto = mapperService.map(user, UserDTO.class, EnumMapper.MAPPING_USER_AUTHENTICATION.toString());
+				mapperService.map(user, userDto, EnumMapper.MAPPING_USER_AUTHENTICATION.toString());
+				response.setModel(userDto);
+			}
 			response.setStatus(Response.STATUS_SUCCES);
 
 		} catch (AuthenticationException aex) {
