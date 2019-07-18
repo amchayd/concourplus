@@ -1,9 +1,12 @@
-package org.concourplus.dto.referential;
+package org.concourplus.business.auth.json;
 
-public class CountryDTO {
+import java.util.Set;
+
+public class ProfileJson {
 	private long id;
 	private String code;
 	private String label;
+	private Set<RoleJson> roles;
 
 	public long getId() {
 		return id;
@@ -27,6 +30,14 @@ public class CountryDTO {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public Set<RoleJson> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleJson> roles) {
+		this.roles = roles;
 	}
 
 }

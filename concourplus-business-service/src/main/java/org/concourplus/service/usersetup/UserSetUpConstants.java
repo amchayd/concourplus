@@ -3,6 +3,7 @@ package org.concourplus.service.usersetup;
 public interface UserSetUpConstants {
 	
 	String INVALIDE_USERNAME = "C-USER-01";
+	String INVALIDE_PASSWORD = "C-USER-02";
 	String USERNAME_EXISTANT = "C-USER-05";
 	
 	String ROLE_ADM = "ROLE_ADM";

@@ -11,11 +11,11 @@ import org.concourplus.model.usersetup.User;
 
 public interface UserService {
 
-	Response<User> addUser(User user);
+	Response<UserDTO> addUser(UserDTO user);
 
 	Response<User> editUser(User user);
 
-	Response<User> validateUser(Request<User> request);
+	Response<UserDTO> validateUser(Request<UserDTO> request);
 
 	Response<User> getUser(User user);
 

@@ -1,5 +1,5 @@
 package org.concourplus.dto.referential;
 
-public class GenderDTO {
-
+public enum GenderDTO {
+	MALE, FEMALE
 }

@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://dozer.sourceforge.net
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
-	<mapping map-id="MAPPING_PROFILE_ALL" map-empty-string="false"
+	<mapping map-id="MAPPING_STATUS_ALL" map-empty-string="false"
 		map-null="false" wildcard="false">
-		<class-a>org.concourplus.model.usersetup.Profile</class-a>
-		<class-b>org.concourplus.dto.usersetup.ProfileDTO</class-b>
+		<class-a>org.concourplus.model.referential.UserStatus</class-a>
+		<class-b>org.concourplus.dto.referential.UserStatusDTO</class-b>
 		<field>
 			<a>id</a>
 			<b>id</b>
@@ -18,10 +18,6 @@
 		<field>
 			<a>label</a>
 			<b>label</b>
-		</field>
-		<field map-id="MAPPING_ROLE_ALL">
-			<a>roles</a>
-			<b>roles</b>
 		</field>
 	</mapping>
 </mappings>

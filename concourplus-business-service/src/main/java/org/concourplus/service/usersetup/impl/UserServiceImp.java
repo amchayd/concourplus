@@ -14,6 +14,7 @@ import org.concourplus.base.util.SpecificationsHelper;
 import org.concourplus.dao.usersetup.UserRepository;
 import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
+import org.concourplus.service.mapper.EnumMapper;
 import org.concourplus.service.mapper.MapperService;
 import org.concourplus.service.usersetup.UserService;
 import org.concourplus.service.usersetup.UserSetUpConstants;
@@ -42,23 +43,31 @@ public class UserServiceImp implements UserService, UserSetUpConstants {
 	@Autowired
 	private transient MapperService mapperService;
 
-	public Response<User> addUser(User user) {
-		final Response<User> response = new Response<User>();
+	public Response<UserDTO> addUser(UserDTO user) {
+		final Response<UserDTO> response = new Response<UserDTO>();
 		this.validate(user, response);
 		if (!response.hasStatutError()) {
 			user.setPassword(bcryptPassword(user.getPassword()));
-			final User userRef = userRepository.save(user);
-			response.setModel(userRef);
+			final User userToSave = mapperService.map(user, User.class, EnumMapper.MAPPING_USER_REGISTER.toString());
+			final User userRef = userRepository.save(userToSave);
+			final UserDTO userToReturn = mapperService.map(userRef, UserDTO.class, EnumMapper.MAPPING_USER_REGISTER.toString());
+			response.setModel(userToReturn);
 		}
 		return response;
 	}
 
-	private void validate(final User user, final Response<User> response) {
+	private void validate(final UserDTO user, final Response<UserDTO> response) {
 		if (StringUtils.isEmpty(user.getUsername())) {
 			/**
-			 * register message non null login
+			 * register message non null Username
 			 */
 			response.addMessage(messageSource.getMessage(INVALIDE_USERNAME, null, ConstantBase.DEFAULT_MESSAGE, null));
+		}
+		if (StringUtils.isEmpty(user.getPassword())) {
+			/**
+			 * register message non null Password
+			 */
+			response.addMessage(messageSource.getMessage(INVALIDE_PASSWORD, null, ConstantBase.DEFAULT_MESSAGE, null));
 		}
 		final boolean existsUserName = existsByUserName(user.getUsername(), user.getId());
 		if (existsUserName) {
@@ -110,8 +119,8 @@ public class UserServiceImp implements UserService, UserSetUpConstants {
 		return response;
 	}
 
-	public Response<User> validateUser(Request<User> request) {
-		Response<User> response = new Response<User>();
+	public Response<UserDTO> validateUser(Request<UserDTO> request) {
+		Response<UserDTO> response = new Response<UserDTO>();
 		this.validate(request.getModel(), response);
 		return response;
 	}

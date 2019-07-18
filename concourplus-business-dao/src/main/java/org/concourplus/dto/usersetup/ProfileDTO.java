@@ -1,9 +1,12 @@
 package org.concourplus.dto.usersetup;
 
+import java.util.Set;
+
 public class ProfileDTO {
 	private long id;
 	private String code;
 	private String label;
+	private Set<RoleDTO> roles;
 
 	public long getId() {
 		return id;
@@ -28,5 +31,16 @@ public class ProfileDTO {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<RoleDTO> roles) {
+		this.roles = roles;
+	}
+
+
+	
 
 }

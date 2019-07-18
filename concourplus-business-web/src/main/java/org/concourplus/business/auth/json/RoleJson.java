@@ -1,6 +1,6 @@
-package org.concourplus.dto.referential;
+package org.concourplus.business.auth.json;
 
-public class CountryDTO {
+public class RoleJson {
 	private long id;
 	private String code;
 	private String label;

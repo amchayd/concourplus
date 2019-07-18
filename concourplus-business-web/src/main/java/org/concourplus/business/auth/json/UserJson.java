@@ -1,102 +1,50 @@
-package org.concourplus.model.usersetup;
+package org.concourplus.business.auth.json;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import org.concourplus.business.referential.json.AddressJson;
+import org.concourplus.business.referential.json.SecretQuestionJson;
+import org.concourplus.business.referential.json.UserStatusJson;
+import org.concourplus.dto.referential.AddressDTO;
+import org.concourplus.dto.referential.GenderDTO;
+import org.concourplus.dto.referential.SecretQuestionDTO;
+import org.concourplus.dto.referential.UserStatusDTO;
+import org.concourplus.dto.usersetup.ProfileDTO;
+import org.concourplus.dto.usersetup.UserDTO;
 
-import org.concourplus.model.referential.Address;
-import org.concourplus.model.referential.Gender;
-import org.concourplus.model.referential.SecretQuestion;
-import org.concourplus.model.referential.UserStatus;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-@Table(name = "user")
-public class User implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue
+public class UserJson {
 	private long id;
-	
-	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name = "last_name")
 	private String lastName;
-	
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
-    
+	private String gender;
 	private Date birthdate;
 	private String phoneNumber;
 	private String mail;
-	
 	private String username;
 	private String password;
 	private String token;
-	
-	@Column(name = "token_date")
 	private Date tokenDate;
-	
-	@Column(name = "is_connected")
 	private Boolean isConnected;
-
-	@Column(name = "is_absent")
 	private Boolean isAbsent;
-
-	@Column(name = "last_connexion")
 	private Date lastConnexion;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="address_id")
-	private Address address;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="secret_question_id")
-	private SecretQuestion secretQuestion;
-	
-	@Column(name = "secret_question_answer")
+	private AddressJson address;
+	private SecretQuestionJson secretQuestion;
 	private String secretQuestionAnswer;
-	
-	@Column(name = "creation_date")
 	private Date creationDate;
-	
-	@Column(name = "last_modification_date")
 	private Date lastModificationDate;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="status_id")
-	private UserStatus status;
-	
-	@Column(name = "status_description")
-	private String statusDescription; 
-	
-	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "user_profile", 
-        joinColumns = { @JoinColumn(name = "user_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "profile_id") })
-	private Set<Profile> profiles;
+	private UserStatusJson status;
+	private String statusDescription;
+	private Set<ProfileJson> profiles;
+
+	public UserJson() {
+	}
+
+	public UserJson(UserDTO user) {
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.gender = user.getGender().toString();
+	}
 
 	public long getId() {
 		return id;
@@ -122,11 +70,11 @@ public class User implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -210,19 +158,19 @@ public class User implements Serializable{
 		this.lastConnexion = lastConnexion;
 	}
 
-	public Address getAddress() {
+	public AddressJson getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressJson address) {
 		this.address = address;
 	}
 
-	public SecretQuestion getSecretQuestion() {
+	public SecretQuestionJson getSecretQuestion() {
 		return secretQuestion;
 	}
 
-	public void setSecretQuestion(SecretQuestion secretQuestion) {
+	public void setSecretQuestion(SecretQuestionJson secretQuestion) {
 		this.secretQuestion = secretQuestion;
 	}
 
@@ -250,11 +198,11 @@ public class User implements Serializable{
 		this.lastModificationDate = lastModificationDate;
 	}
 
-	public UserStatus getStatus() {
+	public UserStatusJson getStatus() {
 		return status;
 	}
 
-	public void setStatus(UserStatus status) {
+	public void setStatus(UserStatusJson status) {
 		this.status = status;
 	}
 
@@ -266,18 +214,32 @@ public class User implements Serializable{
 		this.statusDescription = statusDescription;
 	}
 
-	public Set<Profile> getProfiles() {
+	public Set<ProfileJson> getProfiles() {
 		return profiles;
 	}
 
-	public void setProfiles(Set<Profile> profiles) {
+	public void setProfiles(Set<ProfileJson> profiles) {
 		this.profiles = profiles;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public UserDTO objToDto() {
+		UserDTO user = new UserDTO();
+		user.setFirstName(this.firstName);
+		user.setLastName(this.lastName);
+		if (this.gender.equals("MALE")) {
+			user.setGender(GenderDTO.MALE);
+		} else {
+			user.setGender(GenderDTO.MALE);
+		}
+		user.setBirthdate(this.birthdate);
+		user.setPhoneNumber(this.phoneNumber);
+		user.setMail(this.mail);
+		user.setUsername(this.username);
+		user.setPassword(this.password);
+		user.setSecretQuestion(this.secretQuestion.objToDto());
+		user.setSecretQuestionAnswer(this.secretQuestionAnswer);
+		user.setCreationDate(new Date());
+
+		return user;
 	}
-
-
-	
 }

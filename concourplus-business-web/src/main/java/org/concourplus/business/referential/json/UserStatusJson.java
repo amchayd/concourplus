@@ -1,6 +1,6 @@
-package org.concourplus.dto.referential;
+package org.concourplus.business.referential.json;
 
-public class CountryDTO {
+public class UserStatusJson {
 	private long id;
 	private String code;
 	private String label;
