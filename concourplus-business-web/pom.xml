@@ -1,19 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.concourplus</groupId>
-    <artifactId>concourplus</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>concourplus-business-web</artifactId>
-  
-  <dependencies>
-    	<dependency>
-	  		<groupId>org.concourplus</groupId>
-	  		<artifactId>concourplus-business-service</artifactId>
-	  		<version>0.0.1-SNAPSHOT</version>
-	  	</dependency>
-  		<!-- Dependencies for REST API -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.concourplus</groupId>
+		<artifactId>concourplus</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>concourplus-business-web</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.concourplus</groupId>
+			<artifactId>concourplus-business-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- Dependencies for REST API -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -33,6 +35,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-		</dependency>	
-  </dependencies>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.7</version>
+		</dependency>
+	</dependencies>
 </project>

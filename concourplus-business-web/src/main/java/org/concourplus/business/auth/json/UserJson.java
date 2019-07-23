@@ -1,16 +1,14 @@
 package org.concourplus.business.auth.json;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.concourplus.business.referential.json.AddressJson;
 import org.concourplus.business.referential.json.SecretQuestionJson;
 import org.concourplus.business.referential.json.UserStatusJson;
-import org.concourplus.dto.referential.AddressDTO;
 import org.concourplus.dto.referential.GenderDTO;
-import org.concourplus.dto.referential.SecretQuestionDTO;
-import org.concourplus.dto.referential.UserStatusDTO;
-import org.concourplus.dto.usersetup.ProfileDTO;
 import org.concourplus.dto.usersetup.UserDTO;
 
 public class UserJson {
@@ -18,21 +16,21 @@ public class UserJson {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private Date birthdate;
+	private String birthdate;
 	private String phoneNumber;
 	private String mail;
 	private String username;
 	private String password;
 	private String token;
-	private Date tokenDate;
+	private String tokenDate;
 	private Boolean isConnected;
 	private Boolean isAbsent;
-	private Date lastConnexion;
+	private String lastConnexion;
 	private AddressJson address;
 	private SecretQuestionJson secretQuestion;
 	private String secretQuestionAnswer;
-	private Date creationDate;
-	private Date lastModificationDate;
+	private String creationDate;
+	private String lastModificationDate;
 	private UserStatusJson status;
 	private String statusDescription;
 	private Set<ProfileJson> profiles;
@@ -78,11 +76,11 @@ public class UserJson {
 		this.gender = gender;
 	}
 
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
-
-	public void setBirthdate(Date birthdate) {
+	
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -126,11 +124,11 @@ public class UserJson {
 		this.token = token;
 	}
 
-	public Date getTokenDate() {
+	public String getTokenDate() {
 		return tokenDate;
 	}
 
-	public void setTokenDate(Date tokenDate) {
+	public void setTokenDate(String tokenDate) {
 		this.tokenDate = tokenDate;
 	}
 
@@ -150,11 +148,11 @@ public class UserJson {
 		this.isAbsent = isAbsent;
 	}
 
-	public Date getLastConnexion() {
+	public String getLastConnexion() {
 		return lastConnexion;
 	}
 
-	public void setLastConnexion(Date lastConnexion) {
+	public void setLastConnexion(String lastConnexion) {
 		this.lastConnexion = lastConnexion;
 	}
 
@@ -182,19 +180,19 @@ public class UserJson {
 		this.secretQuestionAnswer = secretQuestionAnswer;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 
-	public Date getLastModificationDate() {
+	public String getLastModificationDate() {
 		return lastModificationDate;
 	}
 
-	public void setLastModificationDate(Date lastModificationDate) {
+	public void setLastModificationDate(String lastModificationDate) {
 		this.lastModificationDate = lastModificationDate;
 	}
 
@@ -222,7 +220,7 @@ public class UserJson {
 		this.profiles = profiles;
 	}
 
-	public UserDTO objToDto() {
+	public UserDTO objToDto() throws ParseException {
 		UserDTO user = new UserDTO();
 		user.setFirstName(this.firstName);
 		user.setLastName(this.lastName);
@@ -231,7 +229,7 @@ public class UserJson {
 		} else {
 			user.setGender(GenderDTO.MALE);
 		}
-		user.setBirthdate(this.birthdate);
+		user.setBirthdate(DateUtils.parseDate(this.birthdate, new String[] { "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy" }));
 		user.setPhoneNumber(this.phoneNumber);
 		user.setMail(this.mail);
 		user.setUsername(this.username);
@@ -242,4 +240,6 @@ public class UserJson {
 
 		return user;
 	}
+	
+	
 }
