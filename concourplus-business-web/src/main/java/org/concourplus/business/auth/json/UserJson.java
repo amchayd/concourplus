@@ -1,7 +1,6 @@
 package org.concourplus.business.auth.json;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -79,7 +78,7 @@ public class UserJson {
 	public String getBirthdate() {
 		return birthdate;
 	}
-	
+
 	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
@@ -229,17 +228,14 @@ public class UserJson {
 		} else {
 			user.setGender(GenderDTO.MALE);
 		}
-		user.setBirthdate(DateUtils.parseDate(this.birthdate, new String[] { "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy" }));
+		user.setBirthdate(DateUtils.parseDate(this.birthdate, new String[] { "yyyy/MM/dd" }));
 		user.setPhoneNumber(this.phoneNumber);
 		user.setMail(this.mail);
 		user.setUsername(this.username);
 		user.setPassword(this.password);
 		user.setSecretQuestion(this.secretQuestion.objToDto());
 		user.setSecretQuestionAnswer(this.secretQuestionAnswer);
-		user.setCreationDate(new Date());
-
 		return user;
 	}
-	
-	
+
 }

@@ -8,6 +8,27 @@
 		<class-a>org.concourplus.model.usersetup.User</class-a>
 		<class-b>org.concourplus.dto.usersetup.UserDTO</class-b>
 	</mapping>
+	<mapping map-id="MAPPING_BASIC_USER" map-empty-string="false"
+		map-null="false" wildcard="false">
+		<class-a>org.concourplus.model.usersetup.User</class-a>
+		<class-b>org.concourplus.dto.usersetup.UserDTO</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		<field>
+			<a>firstName</a>
+			<b>firstName</b>
+		</field>
+		<field>
+			<a>lastName</a>
+			<b>lastName</b>
+		</field>
+		<field>
+			<a>username</a>
+			<b>username</b>
+		</field>
+	</mapping>
 	<mapping map-id="MAPPING_USER_AUTHENTICATION"
 		map-empty-string="false" map-null="false" wildcard="false">
 		<class-a>org.concourplus.model.usersetup.User</class-a>
@@ -42,7 +63,7 @@
 		</field>
 	</mapping>
 	<mapping map-id="MAPPING_USER_REGISTER"
-	map-empty-string="false" map-null="false" wildcard="false">
+		map-empty-string="false" map-null="false" wildcard="false">
 		<class-a>org.concourplus.model.usersetup.User</class-a>
 		<class-b>org.concourplus.dto.usersetup.UserDTO</class-b>
 		<field>
@@ -81,7 +102,7 @@
 			<a>password</a>
 			<b>password</b>
 		</field>
-		<field map-id="MAPPING_SECRET-QUESTION_ALL">
+		<field map-id="MAPPING_SECRET_QUESTION_ALL">
 			<a>SecretQuestion</a>
 			<b>SecretQuestion</b>
 		</field>
@@ -97,6 +118,10 @@
 			<a>creationDate</a>
 			<b>creationDate</b>
 		</field>
+		<field>
+			<a>lastModificationDate</a>
+			<b>lastModificationDate</b>
+		</field>
 		<field map-id="MAPPING_STATUS_ALL">
 			<a>status</a>
 			<b>status</b>
@@ -105,5 +130,90 @@
 			<a>profiles</a>
 			<b>profiles</b>
 		</field>
+	</mapping>
+	<mapping map-id="MAPPING_USER_EDIT" map-empty-string="false"
+		map-null="true" wildcard="false">
+		<class-a>org.concourplus.model.usersetup.User</class-a>
+		<class-b>org.concourplus.dto.usersetup.UserDTO</class-b>
+			<field>
+				<a>id</a>
+				<b>id</b>
+			</field>
+			<field>
+				<a>firstName</a>
+				<b>firstName</b>
+			</field>
+			<field>
+				<a>lastName</a>
+				<b>lastName</b>
+			</field>
+			<field>
+				<a>gender</a>
+				<b>gender</b>
+			</field>
+			<field>
+				<a>birthdate</a>
+				<b>birthdate</b>
+			</field>
+			<field>
+				<a>phoneNumber</a>
+				<b>phoneNumber</b>
+			</field>
+			<field>
+				<a>mail</a>
+				<b>mail</b>
+			</field>
+			<field>
+				<a>username</a>
+				<b>username</b>
+			</field>
+			<field>
+				<a>password</a>
+				<b>password</b>
+			</field>
+			<field>
+				<a>token</a>
+				<b>token</b>
+			</field>
+			<field>
+				<a>tokenDate</a>
+				<b>tokenDate</b>
+			</field>
+			<field>
+				<a>isConnected</a>
+				<b>isConnected</b>
+			</field>
+			<field>
+				<a>isAbsent</a>
+				<b>isAbsent</b>
+			</field>
+			<field>
+				<a>lastConnexion</a>
+				<b>lastConnexion</b>
+			</field>
+			<field map-id="MAPPING_SECRET_QUESTION_ALL">
+				<a>secretQuestion</a>
+				<b>secretQuestion</b>
+			</field>
+			<field>
+				<a>secretQuestionAnswer</a>
+				<b>secretQuestionAnswer</b>
+			</field>
+			<field>
+				<a>lastModificationDate</a>
+				<b>lastModificationDate</b>
+			</field>
+			<field>
+				<a>statusDescription</a>
+				<b>statusDescription</b>
+			</field>
+			<field map-id="MAPPING_STATUS_ALL">
+				<a>status</a>
+				<b>status</b>
+			</field>
+			<field map-id="MAPPING_PROFILE_ALL">
+				<a>profiles</a>
+				<b>profiles</b>
+			</field>
 	</mapping>
 </mappings>

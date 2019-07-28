@@ -4,9 +4,15 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Role implements Serializable{
@@ -21,7 +27,8 @@ public class Role implements Serializable{
 	private String code;
 	private String label;
 	
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles", fetch=FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	private Set<Profile> profiles;
 
 	public long getId() {

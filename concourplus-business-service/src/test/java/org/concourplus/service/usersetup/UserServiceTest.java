@@ -1,8 +1,11 @@
 package org.concourplus.service.usersetup;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -25,38 +28,61 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class UserServiceTest {
 
 	private static UserService userService;
+	private static ProfileService profileService;
 	private static ClassPathXmlApplicationContext context;
 
 	@BeforeClass
 	public static void initService() throws Exception {
 		context = new ClassPathXmlApplicationContext("applicationContext-service.xml");
 		userService = context.getBean("userService", UserService.class);
+		profileService = context.getBean("profileService", ProfileService.class);
+	}
+
+	@Test
+	public void testStep1FindAll() {
+		Collection<UserDTO> users = userService.findAll();
+		assertNotEquals("List Users is empty", users.size(), 0);
 	}
 
 	@Ignore
 	public void testStep1AddUser() {
 		UserDTO user = createUser("kl1234", "pass123");
 		Response<UserDTO> response = userService.addUser(user);
-		assertTrue("Has Status Error :",response.hasStatutError());
-		assertEquals("Error :"+response.getMessages().get(0) ,Response.STATUS_ERROR, response.getStatus());
+		assertEquals("Error :" + response.getMessages().get(0), Response.STATUS_ERROR, response.getStatus());
 
 	}
 
 	@Test
-	public void testStep2UpdateUser() {
-		User userRef = userService.getUserById((long) 1);
-		userRef.setLastName("Abou Amal");
-		Response<User> response = userService.editUser(userRef);
+	public void testStep2EditUser() {
+		UserDTO userRef = userService.getUserByUserName("kl1234");
+		assertNotNull("User doesn't existe", userRef);
+		ProfileDTO newProfile = profileService.getProfileByCode("AD");
+		userRef.getProfiles().add(newProfile);
+		Response<UserDTO> response = userService.editUser(userRef);
 		assertEquals(response.getStatus(), Response.STATUS_SUCCES);
+
 	}
 
 	@Test
 	public void testStep3getUsersBySpecification() {
 		Request<UserDTO> request = new Request<>();
-		request.addVariable("userNameIsEqual", "kl123");
+		request.addVariable("userNameIsEqual", "kl1234");
 
 		List<UserDTO> listSpecification = (List<UserDTO>) userService.getUsers(request);
 		assertEquals("Many user have the same username", 1, listSpecification.size());
+	}
+
+	@Test
+	public void testStep4GetUserById() {
+		long id = 11;
+		UserDTO user = userService.getUserById(id);
+		assertNotNull("User is null", user);
+	}
+
+	@Test
+	public void testStep5GetUserByUsername() {
+		UserDTO user = userService.getUserByUserName("kl1234");
+		assertNotNull("User is null", user);
 	}
 
 	private UserDTO createUser(String userName, String password) {
@@ -72,32 +98,10 @@ public class UserServiceTest {
 		user.setPassword(password);
 
 		SecretQuestionDTO sq = new SecretQuestionDTO();
+		sq.setCode("Q1");
 		sq.setQuestion("question 1");
 		user.setSecretQuestion(sq);
 		user.setSecretQuestionAnswer("Answer 1");
-		
-		UserStatusDTO st = new UserStatusDTO();
-		st.setCode("EN");
-		st.setLabel("ENABLED");
-		user.setStatus(st);
-		user.setStatusDescription("account enabled");
-
-		ProfileDTO pf = new ProfileDTO();
-		pf.setCode("USER");
-		pf.setLabel("User");
-		Set<RoleDTO> roles = new HashSet<RoleDTO>();
-		RoleDTO r1 = new RoleDTO();
-		r1.setCode("SLT");
-		r1.setLabel("Select");
-		RoleDTO r2 = new RoleDTO();
-		r2.setCode("DLT");
-		r2.setLabel("Delete");
-		roles.add(r1);
-		roles.add(r2);
-		pf.setRoles(roles);
-		Set<ProfileDTO> pfs = new HashSet<ProfileDTO>();
-		pfs.add(pf);
-		user.setProfiles(pfs);
 
 		return user;
 	}

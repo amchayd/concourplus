@@ -4,9 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.concourplus.base.contract.Response;
 import org.concourplus.dto.usersetup.UserDTO;
-import org.concourplus.model.usersetup.User;
 import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.Ignore;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AuthServiceTest {
@@ -20,9 +19,9 @@ public class AuthServiceTest {
 		authenticationService = context.getBean("authenticationService", AuthenticationService.class);
 	}
 
-	@Test
+	@Ignore
 	public void testLogin() {
-		Response<UserDTO> response = authenticationService.login("kl123", "pass123");
+		Response<UserDTO> response = authenticationService.login("0004", "toto");
 
 		assertEquals("Username or Password are invalid :", Response.STATUS_SUCCES, response.getStatus());
 	}

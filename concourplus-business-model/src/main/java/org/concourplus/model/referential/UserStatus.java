@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.concourplus.model.usersetup.User;
 
 @Entity
-@Table(name = "User_status")
+@Table(name = "Userstatus")
 public class UserStatus implements Serializable{
 	
 	/**

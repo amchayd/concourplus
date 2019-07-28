@@ -8,23 +8,26 @@ import org.concourplus.base.contract.Response;
 import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.model.usersetup.User;
 
-
 public interface UserService {
 
-	Response<UserDTO> addUser(UserDTO user);
+	public Response<UserDTO> addUser(UserDTO user);
 
-	Response<User> editUser(User user);
+	public Response<UserDTO> editUser(UserDTO user);
 
-	Response<UserDTO> validateUser(Request<UserDTO> request);
+	public Response<UserDTO> validateUser(Request<UserDTO> request);
 
-	Response<User> getUser(User user);
+	public Response<User> getUser(User user);
 
-	User getUserById(Long id);
+	public UserDTO getUserById(Long id);
 
-	Collection<UserDTO> getUsers(Request<UserDTO> request);
+	public UserDTO getUserByUserName(String username);
 
-	void saveOrUpdate(User user);
+	public Collection<UserDTO> getUsers(Request<UserDTO> request);
 
-	void updateUserToken(String token, Date tokenDate, Long id);
+	public void saveOrUpdate(User user);
+
+	public void updateUserToken(String token, Date tokenDate, Long id);
+
+	public Collection<UserDTO> findAll();
 
 }

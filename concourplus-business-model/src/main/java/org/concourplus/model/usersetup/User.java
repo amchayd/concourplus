@@ -23,8 +23,6 @@ import org.concourplus.model.referential.Gender;
 import org.concourplus.model.referential.SecretQuestion;
 import org.concourplus.model.referential.UserStatus;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "user")
 public class User implements Serializable{
@@ -71,7 +69,7 @@ public class User implements Serializable{
 	@JoinColumn(name="address_id")
 	private Address address;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
     @JoinColumn(name="secret_question_id")
 	private SecretQuestion secretQuestion;
 	
@@ -84,14 +82,14 @@ public class User implements Serializable{
 	@Column(name = "last_modification_date")
 	private Date lastModificationDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
     @JoinColumn(name="status_id")
 	private UserStatus status;
 	
 	@Column(name = "status_description")
 	private String statusDescription; 
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany
     @JoinTable(
         name = "user_profile", 
         joinColumns = { @JoinColumn(name = "user_id") }, 

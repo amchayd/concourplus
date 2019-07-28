@@ -18,10 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("authenticationService")
-@Transactional(readOnly = false)
+@Transactional
 public class AuthenticationServiceImpl implements AuthenticationService{
 
 	private static final String INVALIDE_LOGIN_PASS = "AUTH-01";
@@ -30,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private UserRepository userRepository;
 
 	@Autowired
-	private MessageSource messageSource;
+	private MessageSource messageSourceUserSetup;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -39,6 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private transient MapperService mapperService;
 	
 	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Response<UserDTO> login(String username, String password) {
 		Response<UserDTO> response = new Response<UserDTO>();
 		try {
@@ -57,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
 		} catch (AuthenticationException aex) {
 			response.setStatus(Response.STATUS_ERROR);
-			response.addMessage(messageSource.getMessage(INVALIDE_LOGIN_PASS, null, ConstantBase.DEFAULT_MESSAGE, null));
+			response.addMessage(messageSourceUserSetup.getMessage(INVALIDE_LOGIN_PASS, null, ConstantBase.DEFAULT_MESSAGE, null));
 		}
 		return response;
 	}
