@@ -1,6 +1,7 @@
 package org.concourplus.business.auth.json;
 
 import java.text.ParseException;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -8,6 +9,7 @@ import org.concourplus.business.referential.json.AddressJson;
 import org.concourplus.business.referential.json.SecretQuestionJson;
 import org.concourplus.business.referential.json.UserStatusJson;
 import org.concourplus.dto.referential.GenderDTO;
+import org.concourplus.dto.usersetup.ProfileDTO;
 import org.concourplus.dto.usersetup.UserDTO;
 
 public class UserJson {
@@ -41,6 +43,9 @@ public class UserJson {
 		this.firstName = user.getFirstName();
 		this.lastName = user.getLastName();
 		this.gender = user.getGender().toString();
+		this.username = user.getUsername();
+		this.mail = user.getMail();
+		this.profiles = ProfileJson.objsToJson(user.getProfiles());
 	}
 
 	public long getId() {
@@ -228,13 +233,28 @@ public class UserJson {
 		} else {
 			user.setGender(GenderDTO.MALE);
 		}
-		user.setBirthdate(DateUtils.parseDate(this.birthdate, new String[] { "yyyy/MM/dd" }));
+
+		if (this.birthdate != null) {
+			user.setBirthdate(DateUtils.parseDate(this.birthdate, new String[] { "yyyy/MM/dd" }));
+		}
 		user.setPhoneNumber(this.phoneNumber);
 		user.setMail(this.mail);
 		user.setUsername(this.username);
 		user.setPassword(this.password);
-		user.setSecretQuestion(this.secretQuestion.objToDto());
+
+		if (this.secretQuestion != null) {
+			user.setSecretQuestion(this.secretQuestion.objToDto());
+		}
 		user.setSecretQuestionAnswer(this.secretQuestionAnswer);
+
+		if (this.profiles != null && this.profiles.size() != 0) {
+			Set<ProfileDTO> profilesDto = new HashSet<ProfileDTO>();
+
+			for (ProfileJson p : this.profiles) {
+				profilesDto.add(p.objToDto());
+			}
+			user.setProfiles(profilesDto);
+		}
 		return user;
 	}
 

@@ -1,5 +1,7 @@
 package org.concourplus.controller.accesssetup;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.concourplus.business.auth.AuthenticationBusiness;
 import org.concourplus.business.auth.json.UserJson;
 import org.concourplus.business.helpers.JsonResult;
@@ -27,10 +29,15 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public JsonResult login(@RequestParam(value = "username", required = true) String username,
-			@RequestParam(value = "password", required = true) String password) {
+	public JsonResult login(@RequestBody UserJson user, HttpServletResponse response) {
 
-		return authenticationBusiness.login(username, password);
+		JsonResult jsonResult = authenticationBusiness.login(user.getUsername(), user.getPassword());
+		if (jsonResult.getStatus().equals(JsonStatus.SUCCESS_STATUS.toString())) {
+			response.setHeader("Access-Control-Expose-Headers", "Token");
+			UserJson userRef = (UserJson) jsonResult.getData().get("user");
+			response.setHeader("Token", authenticationBusiness.generateToken(userRef));
+		}
+		return jsonResult;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = "application/json")

@@ -2,6 +2,7 @@ package org.concourplus.business.auth.impl;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -11,10 +12,12 @@ import java.util.Map;
 import org.concourplus.base.contract.Request;
 import org.concourplus.base.contract.Response;
 import org.concourplus.business.auth.AuthenticationBusiness;
+import org.concourplus.business.auth.json.UserJson;
 import org.concourplus.business.helpers.JsonResult;
 import org.concourplus.business.helpers.JsonStatus;
 import org.concourplus.dto.usersetup.UserDTO;
 import org.concourplus.service.accesssetup.AuthenticationService;
+import org.concourplus.service.security.JwtUtil;
 import org.concourplus.service.usersetup.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,9 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private JwtUtil jwtUtil;
 
 	private SecureRandom random = new SecureRandom();
 
@@ -49,24 +55,17 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 					authenticationService.updateUserToken(user.getToken(), user.getTokenDate(), user.getId());
 				}
 
+				UserJson userJson = new UserJson(user);
 				response.setStatus(Response.STATUS_SUCCES);
 				messages.add("Login Success!");
 
-				Map<String, Object> userMap = new HashMap<>();
-				userMap.put("id", user.getId());
-				userMap.put("username", user.getUsername());
-				userMap.put("firstName", user.getFirstName());
-				userMap.put("lastName", user.getLastName());
-				userMap.put("token", user.getToken());
-
 				result.setStatus(JsonStatus.SUCCESS_STATUS.toString());
 				result.setMessages(messages);
-				result.getData().put("user", userMap);
+				result.getData().put("user", userJson);
 
-			} else {
+			} else if (response != null) {
 				result.setStatus(JsonStatus.ERROR_STATUS.toString());
-				result.setMessages(messages);
-				result.getData().put("user", null);
+				result.setMessages(response.getMessages());
 			}
 
 			return result;
@@ -126,5 +125,17 @@ public class AuthenticationBusinessImpl implements AuthenticationBusiness {
 
 	private String getRandomToken() {
 		return new BigInteger(130, random).toString(32);
+	}
+
+	@Override
+	public String generateToken(UserJson user) {
+		try {
+			UserDTO userDto = user.objToDto();
+			return jwtUtil.generateToken(userDto);
+		} catch (ParseException e) {
+			// Log to be added
+			return null;
+		}
+
 	}
 }

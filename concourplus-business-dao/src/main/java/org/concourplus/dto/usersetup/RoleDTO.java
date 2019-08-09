@@ -29,4 +29,9 @@ public class RoleDTO {
 		this.label = label;
 	}
 
+	@Override
+	public String toString() {
+		return "{code:" + code + ", label:" + label + "}";
+	}
+
 }

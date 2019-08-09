@@ -11,7 +11,5 @@
 
 	<context:component-scan base-package="org.concourplus.controller" />
 	<mvc:annotation-driven />
-	<bean class="org.concourplus.controller.utils.RestInterceptor" />
 	
-
 </beans>

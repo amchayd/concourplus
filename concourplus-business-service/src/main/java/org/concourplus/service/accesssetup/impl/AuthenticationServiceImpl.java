@@ -52,7 +52,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 			
 			if (user != null && user.getId() != 0) {
 				final UserDTO userDto = mapperService.map(user, UserDTO.class, EnumMapper.MAPPING_USER_AUTHENTICATION.toString());
-				mapperService.map(user, userDto, EnumMapper.MAPPING_USER_AUTHENTICATION.toString());
 				response.setModel(userDto);
 			}
 			response.setStatus(Response.STATUS_SUCCES);

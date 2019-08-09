@@ -58,4 +58,8 @@
 		entity-manager-factory-ref="emf" base-package="org.concourplus.dao" />
 	<import resource="applicationContext-messages.xml" />
 	<import resource="applicationContext-security.xml" />
+	<bean id="jwtProperties"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jwt.properties" />
+	</bean>
 </beans>

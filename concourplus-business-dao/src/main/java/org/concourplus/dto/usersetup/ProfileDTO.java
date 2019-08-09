@@ -40,7 +40,9 @@ public class ProfileDTO {
 		this.roles = roles;
 	}
 
-
-	
+	@Override
+	public String toString() {
+		return " {code:" + code + ", label:" + label + ", roles:[" + roles + "]}";
+	}
 
 }
